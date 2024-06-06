@@ -38,10 +38,43 @@ if (isset($_GET['edit']) && $_GET['edit'] == "true") {
   <title>Profil Saya</title>
   <!-- 1 Masukkan meta name habis itu ke style.css-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style type="text/tailwindcss">
+    .container {
+      @apply flex gap-4 justify-between w-full p-4 items-center bg-white rounded shadow-sm mb-8
+    }
+
+    .button {
+      @apply px-3 py-2 rounded border
+    }
+
+    .data {
+      @apply flex gap-4
+    }
+
+    .data > p {
+      @apply flex-auto justify-start
+    }
+    
+    .data > p:first-child{
+      @apply w-1/3
+    }
+
+    .data > p:last-child{
+      @apply w-2/3 text-gray-500
+    }
+
+    .form {
+      @apply w-full flex flex-col gap-2 mb-4
+    }
+
+    .input {
+      @apply border border-slate-500 px-3 py-2 rounded
+    }
+  </style>
 </head>
 
-<body>
+<body class="px-48 bg-slate-100 font-sans">
   <!-- <nav>
     <div class="menu-mobile">
       <a href="#">Menu</a>
@@ -56,29 +89,27 @@ if (isset($_GET['edit']) && $_GET['edit'] == "true") {
   </nav> -->
 
   <section id="box-profile" class="container">
-    <div class="img-profile">
-      <img
-        src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+    <div class="img-profile flex flex-auto">
+      <img class="w-36" src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
     </div>
-    <div class="description">
-      <div id="description-data">
-        <h1><?php echo $portofolio->name ?? '-'; ?></h1>
-        <p class="text-gray"><?php echo $portofolio->role ?? '-'; ?></p>
+    <div class="description flex-auto w-4/12">
+      <div id="description-data" class="mb-4">
+        <h1 class="text-3xl font-bold"><?php echo $portofolio->name ?? '-'; ?></h1>
+        <p class="text-sm text-gray-500"><?php echo $portofolio->role ?? '-'; ?></p>
       </div>
-      <div id="description-action">
+      <div id="description-action" class="flex gap-4">
         <form action="action.php" method="POST">
           <input type="hidden" name="edit" value="true" />
           <input type="hidden" name="email" value="<?php echo $portofolio->email ?? '' ?>" />
-          <input type="submit" class="button bg-blue" value="Edit" <?php if (!$portofolioExist)
-            echo 'disabled' ?>>
-          </form>
-          <a href="#" class="button border-green">Resume</a>
-        </div>
+          <input type="submit" class="button bg-blue-500 hover:bg-blue-700 text-white cursor-pointer" value="Edit" <?php if (!$portofolioExist) echo 'disabled' ?>>
+        </form>
+        <a href="#" class="button border-green-700 text-green-700 hover:bg-slate-100">Resume</a>
       </div>
-      <div class="information">
-        <div class="data">
-          <p class="field">Availability</p>
-          <p class="text-gray"><?php echo $portofolio->availability ?? '-'; ?></p>
+    </div>
+    <div class="information flex-auto w-5/12 border-l border-slate-300 pl-4 h-full">
+      <div class="data">
+        <p class="field">Availability</p>
+        <p class="text-gray"><?php echo $portofolio->availability ?? '-'; ?></p>
       </div>
       <div class="data">
         <p class="field">Usia</p>
@@ -100,44 +131,37 @@ if (isset($_GET['edit']) && $_GET['edit'] == "true") {
   </section>
 
   <section id="input-form" class="container">
-    <form method="POST" action="action.php">
+    <form method="POST" action="action.php" class="w-full">
       <div class="form">
         <label>Nama</label>
-        <input type="text" name="nama" placeholder="masukkan nama anda" required
-          value="<?php echo $editPortofolio['name'] ?? '' ?>">
+        <input class="input" type="text" name="nama" placeholder="masukkan nama anda" required value="<?php echo $editPortofolio['name'] ?? '' ?>">
       </div>
       <div class="form">
         <label>Role</label>
-        <input type="text" name="role" required
-        value="<?php echo $editPortofolio['role'] ?? '' ?>">
+        <input class="input"  type="text" name="role" required value="<?php echo $editPortofolio['role'] ?? '' ?>">
       </div>
       <div class="form">
         <label>Availability</label>
-        <input type="text" name="availability" required
-        value="<?php echo $editPortofolio['availability'] ?? '' ?>">
+        <input class="input"  type="text" name="availability" required value="<?php echo $editPortofolio['availability'] ?? '' ?>">
       </div>
       <div class="form">
         <label>Usia</label>
-        <input type="number" name="usia" required
-        value="<?php echo $editPortofolio['age'] ?? '' ?>">
+        <input class="input"  type="number" name="usia" required value="<?php echo $editPortofolio['age'] ?? '' ?>">
       </div>
       <div class="form">
         <label>Lokasi</label>
-        <input type="text" name="lokasi" required
-        value="<?php echo $editPortofolio['location'] ?? '' ?>">
+        <input class="input"  type="text" name="lokasi" required value="<?php echo $editPortofolio['location'] ?? '' ?>">
       </div>
       <div class="form">
         <label>Years Experience</label>
-        <input type="number" name="pengalaman" required
-        value="<?php echo $editPortofolio['experience'] ?? '' ?>">
+        <input class="input"  type="number" name="pengalaman" required value="<?php echo $editPortofolio['experience'] ?? '' ?>">
       </div>
       <div class="form">
         <label>Email</label>
-        <input type="email" name="email" required
-        value="<?php echo $editPortofolio['email'] ?? '' ?>">
+        <input class="input"  type="email" name="email" required value="<?php echo $editPortofolio['email'] ?? '' ?>">
       </div>
       <div class="form">
-        <input type="submit" name="submit" value="SUBMIT" class="bg-green">
+        <input type="submit" name="submit" value="SUBMIT" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded cursor-pointer">
       </div>
     </form>
   </section>
